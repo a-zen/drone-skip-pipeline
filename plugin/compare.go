@@ -50,7 +50,7 @@ func (c *compare) getChanged() error {
 
 	fmt.Println("DRONE_COMMIT_BEFORE: ", c.commitSHAbefore)
 
-	if strings.Compare(c.commitSHAbefore, "0000000000000000000000000000000000000000") == 0 {
+	if (strings.Compare(c.commitSHAbefore, "0000000000000000000000000000000000000000") == 0) || len(c.commitSHAbefore) == 0 {
 		return errors.New("before sha was empty")
 	}
 
