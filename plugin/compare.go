@@ -3,6 +3,7 @@ package plugin
 import (
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
@@ -48,6 +49,10 @@ func (c *compare) open() (err error) {
 func (c *compare) getChanged() error {
 
 	fmt.Println("DRONE_COMMIT_BEFORE: ", c.commitSHAbefore)
+
+	if strings.Compare(c.commitSHAbefore, "0000000000000000000000000000000000000000") == 0 {
+		return errors.New("before sha was empty")
+	}
 
 	beforeHash := plumbing.NewHash(c.commitSHAbefore)
 	beforeCommit, err := c.repo.CommitObject(beforeHash)

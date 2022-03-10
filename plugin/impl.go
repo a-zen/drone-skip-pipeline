@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"fmt"
 	"errors"
 	"os"
 
@@ -42,6 +43,10 @@ func (p *Plugin) Execute() error {
 
 	err = c.getChanged()
 	if err != nil {
+		if (err.Error() == "before sha was empty") {
+			fmt.Println(err)
+			return nil
+		}
 		return err
 	}
 
